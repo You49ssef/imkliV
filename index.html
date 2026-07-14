@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/png" href="logo.png">
+<link rel="apple-touch-icon" href="logo.png">
+  <title>IMKLI — اطلب وجبات أسبوعك</title>
+
+  <!-- Google Fonts - Cairo (Arabic) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Modern CSS -->
+  <link href="modern.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="#" class="navbar-brand">
+        <img src="logo.png" alt="IMKLI Logo" class="navbar-logo">
+      </a>
+      <button class="navbar-toggle" id="navbar-toggle" aria-label="Menu">
+        <i data-lucide="menu"></i>
+      </button>
+      <ul class="navbar-menu" id="navbar-menu">
+        <li><a href="#" class="navbar-link active">الرئيسية</a></li>
+        <li><a href="#meals" class="navbar-link">وجباتنا</a></li>
+        <li><a href="#cart" class="navbar-link">اطلب الآن</a></li>
+        <li><button class="navbar-button">ابدأ</button></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1 class="hero-title">ودّع الوجبات السريعة... واستمتع بوجبات منزلية طازجة</h1>
+      <p class="hero-subtitle">إمكلي... لمسة ماما في كل وجبة</p>
+      <div class="hero-buttons">
+        <a href="#meals" class="btn btn-primary btn-lg">
+          <i data-lucide="utensils"></i>
+          عرض الوجبات
+        </a>
+        <a href="#cart" class="btn btn-secondary btn-lg">
+          <i data-lucide="shopping-cart"></i>
+          اطلب الآن
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container" id="meals">
+    <div class="row" style="margin: 0 -0.75rem;">
+      
+      <!-- Section des repas -->
+      <div class="col" style="flex: 0 0 66.666667%; max-width: 66.666667%; padding: 0 0.75rem;">
+        <!-- Grille des repas -->
+        <div id="meals-container" class="row" style="margin: 0 -0.75rem;"></div>
+      </div>
+
+      <!-- Panier -->
+      <div class="col" style="flex: 0 0 33.333333%; max-width: 33.333333%; padding: 0 0.75rem;" id="cart">
+        <div class="cart-section">
+          <div class="cart-header">
+            <i data-lucide="shopping-cart"></i>
+            <h3>طلبي</h3>
+          </div>
+          
+          <div class="cart-items" id="cart-list"></div>
+          <p class="cart-empty" id="cart-empty">لم يتم اختيار أي وجبة بعد.</p>
+
+          <div class="cart-total">
+            <span class="cart-total-label">المجموع</span>
+            <span class="cart-total-value" id="total-value">0.00 MAD</span>
+          </div>
+
+          <form class="cart-form" id="order-form" novalidate>
+            <div class="form-group">
+              <label class="form-label" for="client-name">الاسم الكامل</label>
+              <input type="text" class="form-input" id="client-name" placeholder="الاسم الكامل" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="client-phone">رقم الهاتف</label>
+              <input type="tel" class="form-input" id="client-phone" placeholder="06 12 34 56 78" required>
+            </div>
+
+            <div id="order-feedback"></div>
+
+            <button type="submit" class="btn btn-primary btn-lg w-100" id="submit-order-btn">
+              <i data-lucide="send"></i>
+              تأكيد الطلب
+            </button>
+            <p class="text-center mt-3" style="color: var(--gray-500); font-size: 0.875rem;">
+              <i data-lucide="message-circle" style="width: 16px; height: 16px; display: inline-block; vertical-align: middle;"></i>
+              سيتم توجيهك إلى واتساب
+            </p>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </main>
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabaseClient.js"></script>
+  <script src="main.js"></script>
+  
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+  
+  <!-- Navbar Toggle Script -->
+  <script>
+    const navbarToggle = document.getElementById('navbar-toggle');
+    const navbarMenu = document.getElementById('navbar-menu');
+    
+    navbarToggle.addEventListener('click', () => {
+      navbarMenu.classList.toggle('active');
+    });
+  </script>
+</body>
+</html>

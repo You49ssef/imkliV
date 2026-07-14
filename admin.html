@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IMKLI — Administration</title>
+
+  <!-- Google Fonts - Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  
+  <!-- Admin Modern CSS -->
+  <link href="admin-modern.css" rel="stylesheet">
+</head>
+<body>
+
+  <!-- ===================== VUE : CONNEXION ===================== -->
+  <div id="login-view" class="admin-login-wrap">
+    <div class="admin-login-card">
+      <span class="imkli-brand">
+        <i data-lucide="utensils"></i>
+        IMKLI
+      </span>
+      <p class="text-muted">Espace administrateur</p>
+
+      <form id="login-form" class="admin-form">
+        <div class="admin-form-group">
+          <label class="admin-form-label" for="login-username">Identifiant</label>
+          <input type="text" class="admin-form-input" id="login-username" required autocomplete="username">
+        </div>
+        <div class="admin-form-group">
+          <label class="admin-form-label" for="login-password">Mot de passe</label>
+          <input type="password" class="admin-form-input" id="login-password" required autocomplete="current-password">
+        </div>
+        <div id="login-error" class="admin-alert admin-alert-danger d-none"></div>
+        <button type="submit" class="btn btn-primary w-100">
+          <i data-lucide="log-in"></i>
+          Se connecter
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ===================== VUE : DASHBOARD ===================== -->
+  <div id="dashboard-view" class="d-none admin-dashboard">
+    
+    <!-- Sidebar Toggle Button (Mobile) -->
+    <button class="admin-sidebar-toggle" id="sidebar-toggle">
+      <i data-lucide="menu"></i>
+    </button>
+    
+    <!-- Sidebar -->
+    <aside class="admin-sidebar" id="admin-sidebar">
+      <div class="admin-sidebar-brand">
+        <img src="logo.png" alt="IMKLI Logo" class="admin-sidebar-logo">
+      </div>
+      
+      <nav>
+        <ul class="admin-sidebar-nav">
+          <li>
+            <a href="#" class="admin-sidebar-nav-item active" data-section="overview">
+              <i data-lucide="layout-dashboard"></i>
+              Tableau de bord
+            </a>
+          </li>
+          <li>
+            <a href="#" class="admin-sidebar-nav-item" data-section="meals">
+              <i data-lucide="utensils"></i>
+              Repas
+            </a>
+          </li>
+          <li>
+            <a href="#" class="admin-sidebar-nav-item" data-section="orders">
+              <i data-lucide="shopping-cart"></i>
+              Commandes
+            </a>
+          </li>
+        </ul>
+      </nav>
+      
+      <div class="admin-sidebar-footer">
+        <ul class="admin-sidebar-nav">
+          <li>
+            <a href="index.html" class="admin-sidebar-nav-item">
+              <i data-lucide="home"></i>
+              Voir le site
+            </a>
+          </li>
+          <li>
+            <a href="#" class="admin-sidebar-nav-item" id="logout-btn">
+              <i data-lucide="log-out"></i>
+              Déconnexion
+            </a>
+          </li>
+        </ul>
+      </div>
+    </aside>
+    
+    <!-- Main Content -->
+    <main class="admin-main">
+      <header class="admin-header">
+        <h1>Tableau de bord</h1>
+        <div class="admin-header-actions">
+          <button class="btn btn-primary">
+            <i data-lucide="plus"></i>
+            Nouveau repas
+          </button>
+        </div>
+      </header>
+      
+      <!-- Stats Cards -->
+      <div class="admin-stats-grid" id="section-overview">
+        <div class="admin-stat-card">
+          <div class="admin-stat-card-icon primary">
+            <i data-lucide="utensils"></i>
+          </div>
+          <div class="admin-stat-card-value" id="stat-meals">0</div>
+          <div class="admin-stat-card-label">Repas actifs</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-card-icon blue">
+            <i data-lucide="shopping-cart"></i>
+          </div>
+          <div class="admin-stat-card-value" id="stat-orders">0</div>
+          <div class="admin-stat-card-label">Commandes</div>
+        </div>
+        <div class="admin-stat-card">
+          <div class="admin-stat-card-icon gold">
+            <i data-lucide="trending-up"></i>
+          </div>
+          <div class="admin-stat-card-value" id="stat-revenue">0 MAD</div>
+          <div class="admin-stat-card-label">Revenus</div>
+        </div>
+      </div>
+      
+      <!-- Formulaire d'ajout / modification de repas -->
+      <section class="admin-section" id="section-meals-form">
+        <h4 id="meal-form-title">
+          <i data-lucide="plus-circle"></i>
+          Ajouter un repas
+        </h4>
+        <form id="meal-form" class="admin-form">
+          <input type="hidden" id="meal-id">
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="meal-nom">Nom du repas *</label>
+              <input type="text" class="admin-form-input" id="meal-nom" required>
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="meal-jour">Jour *</label>
+              <select id="meal-jour" class="admin-form-select" required>
+                <option value="">Choisir...</option>
+                <option>Lundi</option>
+                <option>Mardi</option>
+                <option>Mercredi</option>
+                <option>Jeudi</option>
+                <option>Vendredi</option>
+                <option>Samedi</option>
+                <option>Dimanche</option>
+              </select>
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="meal-prix">Prix (MAD) *</label>
+              <input type="number" step="0.01" min="0" class="admin-form-input" id="meal-prix" required>
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label class="admin-form-label" for="meal-description">Description</label>
+            <textarea class="admin-form-textarea" id="meal-description" rows="2"></textarea>
+          </div>
+          <div class="admin-form-row">
+            <div class="admin-form-group">
+              <label class="admin-form-label" for="meal-image">Image du repas</label>
+              <input type="file" accept="image/*" class="admin-form-input" id="meal-image">
+            </div>
+            <div class="admin-form-group">
+              <label class="admin-form-checkbox">
+                <input type="checkbox" id="meal-disponible" checked>
+                <label for="meal-disponible">Repas disponible</label>
+              </label>
+            </div>
+          </div>
+
+          <div id="meal-form-feedback" class="mt-3"></div>
+
+          <div class="admin-form-actions">
+            <button type="submit" id="meal-save-btn" class="btn btn-primary">
+              <i data-lucide="save"></i>
+              Enregistrer le repas
+            </button>
+            <button type="button" id="meal-cancel-edit" class="btn btn-secondary d-none">
+              <i data-lucide="x"></i>
+              Annuler la modification
+            </button>
+          </div>
+        </form>
+      </section>
+
+      <!-- Liste des repas -->
+      <section class="admin-section" id="section-meals-list">
+        <h4>
+          <i data-lucide="list"></i>
+          Repas enregistrés
+        </h4>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Jour</th>
+                <th>Repas</th>
+                <th>Prix</th>
+                <th class="text-center">Disponible</th>
+                <th class="text-end">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="meals-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Liste des commandes -->
+      <section class="admin-section" id="section-orders">
+        <h4>
+          <i data-lucide="shopping-bag"></i>
+          Commandes
+        </h4>
+        <div class="admin-table-container">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Client</th>
+                <th>Total</th>
+                <th>Statut</th>
+                <th>Modifier statut</th>
+                <th class="text-end">Détails</th>
+              </tr>
+            </thead>
+            <tbody id="orders-table-body"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="config.js"></script>
+  <script src="supabaseClient.js"></script>
+  <script src="admin.js"></script>
+  
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+  
+  <!-- Sidebar Toggle Script -->
+  <script>
+    const sidebarToggle = document.getElementById('sidebar-toggle');
+    const adminSidebar = document.getElementById('admin-sidebar');
+    
+    if (sidebarToggle && adminSidebar) {
+      sidebarToggle.addEventListener('click', () => {
+        adminSidebar.classList.toggle('active');
+      });
+    }
+    
+    // Close sidebar when clicking outside on mobile
+    document.addEventListener('click', (e) => {
+      if (window.innerWidth <= 768) {
+        if (!adminSidebar.contains(e.target) && !sidebarToggle.contains(e.target)) {
+          adminSidebar.classList.remove('active');
+        }
+      }
+    });
+  </script>
+  
+  <!-- Sidebar Navigation Script -->
+  <script>
+    // Navigation sidebar
+    const sidebarNavItems = document.querySelectorAll('.admin-sidebar-nav-item[data-section]');
+    
+    sidebarNavItems.forEach(item => {
+      item.addEventListener('click', (e) => {
+        e.preventDefault();
+        
+        // Remove active class from all nav items
+        sidebarNavItems.forEach(navItem => navItem.classList.remove('active'));
+        // Add active class to clicked item
+        item.classList.add('active');
+        
+        // Get the section to show
+        const section = item.dataset.section;
+        
+        // Hide all sections
+        document.getElementById('section-overview').style.display = 'none';
+        document.getElementById('section-meals-form').style.display = 'none';
+        document.getElementById('section-meals-list').style.display = 'none';
+        document.getElementById('section-orders').style.display = 'none';
+        
+        // Show selected section
+        if (section === 'overview') {
+          document.getElementById('section-overview').style.display = 'grid';
+          document.getElementById('section-meals-form').style.display = 'block';
+          document.getElementById('section-meals-list').style.display = 'block';
+          document.getElementById('section-orders').style.display = 'block';
+        } else if (section === 'meals') {
+          document.getElementById('section-meals-form').style.display = 'block';
+          document.getElementById('section-meals-list').style.display = 'block';
+        } else if (section === 'orders') {
+          document.getElementById('section-orders').style.display = 'block';
+        }
+        
+        // Close sidebar on mobile after selection
+        if (window.innerWidth <= 768) {
+          adminSidebar.classList.remove('active');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
